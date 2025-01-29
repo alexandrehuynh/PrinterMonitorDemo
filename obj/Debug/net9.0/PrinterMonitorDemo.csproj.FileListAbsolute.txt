@@ -1,0 +1,8 @@
+/Users/alexhuynh/Documents/Coding/projects_black/PrinterMonitorDemo/PrinterMonitorDemo/obj/Debug/net9.0/PrinterMonitorDemo.csproj.AssemblyReference.cache
+/Users/alexhuynh/Documents/Coding/projects_black/PrinterMonitorDemo/PrinterMonitorDemo/obj/Debug/net9.0/Avalonia/Resources.Inputs.cache
+/Users/alexhuynh/Documents/Coding/projects_black/PrinterMonitorDemo/PrinterMonitorDemo/obj/Debug/net9.0/Avalonia/resources
+/Users/alexhuynh/Documents/Coding/projects_black/PrinterMonitorDemo/PrinterMonitorDemo/obj/Debug/net9.0/PrinterMonitorDemo.GeneratedMSBuildEditorConfig.editorconfig
+/Users/alexhuynh/Documents/Coding/projects_black/PrinterMonitorDemo/PrinterMonitorDemo/obj/Debug/net9.0/PrinterMonitorDemo.AssemblyInfoInputs.cache
+/Users/alexhuynh/Documents/Coding/projects_black/PrinterMonitorDemo/PrinterMonitorDemo/obj/Debug/net9.0/PrinterMonitorDemo.AssemblyInfo.cs
+/Users/alexhuynh/Documents/Coding/projects_black/PrinterMonitorDemo/PrinterMonitorDemo/obj/Debug/net9.0/PrinterMonitorDemo.csproj.CoreCompileInputs.cache
+/Users/alexhuynh/Documents/Coding/projects_black/PrinterMonitorDemo/PrinterMonitorDemo/obj/Debug/net9.0/PrinterMonitorDemo.sourcelink.json
