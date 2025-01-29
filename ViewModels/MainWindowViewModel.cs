@@ -3,9 +3,10 @@ using System.Threading.Tasks;
 using PrinterMonitorDemo.Models;
 using ReactiveUI;
 
+
 namespace PrinterMonitorDemo.ViewModels
 {
-    public class MainWindowViewModel : ViewModelBase
+    public class MainWindowViewModel : ReactiveObject
     {
         private PrinterHead _printerHead;
         private Random _random = new Random();
