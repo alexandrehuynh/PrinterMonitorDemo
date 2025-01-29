@@ -1,106 +1,199 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:PrinterMonitorDemo.ViewModels"
+        xmlns:ScottPlot="clr-namespace:ScottPlot.Avalonia;assembly=ScottPlot.Avalonia"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="800"
         x:Class="PrinterMonitorDemo.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="Printer Monitor Demo">
+        Title="Printer Monitor Demo"
+        Background="#1a1a1a"
+        WindowState="Maximized">
+
+    <Window.Styles>
+        <Style Selector="Border.panel">
+            <Setter Property="Background" Value="#2d2d2d"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="BoxShadow" Value="0 4 8 0 #0F000000"/>
+        </Style>
+        
+        <Style Selector="TextBlock.title">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#ffffff"/>
+            <Setter Property="Margin" Value="0 0 0 15"/>
+        </Style>
+
+        <Style Selector="TextBlock.value">
+            <Setter Property="FontSize" Value="32"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+
+        <Style Selector="ProgressBar">
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Margin" Value="0 10"/>
+            <Setter Property="CornerRadius" Value="10"/>
+        </Style>
+    </Window.Styles>
 
     <Grid Margin="20" RowDefinitions="Auto,*">
-        <TextBlock Grid.Row="0" 
-                   Text="Printer Head Monitor" 
-                   FontSize="24" 
-                   FontWeight="Bold" 
-                   Margin="0,0,0,20"/>
-        
+        <!-- Header -->
+        <StackPanel Grid.Row="0" Margin="0 0 0 20">
+            <TextBlock Text="Printer Head Monitor" 
+                     FontSize="32" 
+                     FontWeight="Bold" 
+                     Foreground="White"/>
+            <TextBlock Text="Real-time monitoring dashboard"
+                     FontSize="16"
+                     Foreground="#888888"/>
+        </StackPanel>
+
+        <!-- Main Content -->
         <Grid Grid.Row="1" 
               ColumnDefinitions="*,*" 
-              RowDefinitions="*,*" 
-              Margin="10">
-            
+              RowDefinitions="*,*">
+
             <!-- Temperature Panel -->
             <Border Grid.Row="0" 
                     Grid.Column="0" 
-                    Background="#1e1e1e" 
-                    Margin="5" 
-                    CornerRadius="5" 
-                    Padding="15">
-                <StackPanel>
-                    <TextBlock Text="Temperature" 
-                             FontSize="18" 
-                             FontWeight="Bold"/>
-                    <TextBlock Text="{Binding PrinterHead.Temperature, StringFormat={}{0:F1}°C}" 
-                             FontSize="24" 
-                             Foreground="#00ff00"/>
-                </StackPanel>
+                    Classes="panel">
+                <Grid RowDefinitions="Auto,*">
+                    <TextBlock Grid.Row="0" 
+                             Text="Temperature" 
+                             Classes="title"/>
+                    
+                    <Grid Grid.Row="1" RowDefinitions="Auto,*">
+                        <StackPanel Grid.Row="0">
+                            <TextBlock Text="{Binding PrinterHead.Temperature, StringFormat={}{0:F1}°C}"
+                                     Classes="value"
+                                     Foreground="{Binding HasTemperatureWarning, 
+                                         Converter={x:Static BoolConverters.True}, 
+                                         ConverterParameter=#ff4444, 
+                                         FallbackValue=#44ff44}"/>
+                            <ProgressBar Value="{Binding PrinterHead.Temperature}"
+                                       Minimum="50"
+                                       Maximum="80"
+                                       Foreground="{Binding HasTemperatureWarning, 
+                                           Converter={x:Static BoolConverters.True}, 
+                                           ConverterParameter=#ff4444, 
+                                           FallbackValue=#44ff44}"/>
+                        </StackPanel>
+                        
+                        <Border Grid.Row="1" 
+                                Background="#222222" 
+                                CornerRadius="5" 
+                                Margin="0 10 0 0">
+                            <ScottPlot:AvaPlot Name="TemperaturePlot"/>
+                        </Border>
+                    </Grid>
+                </Grid>
             </Border>
 
             <!-- Position Panel -->
             <Border Grid.Row="0" 
                     Grid.Column="1" 
-                    Background="#1e1e1e" 
-                    Margin="5" 
-                    CornerRadius="5" 
-                    Padding="15">
-                <StackPanel>
-                    <TextBlock Text="Position" 
-                             FontSize="18" 
-                             FontWeight="Bold"/>
-                    <StackPanel Orientation="Horizontal" 
-                              Spacing="10">
-                        <TextBlock Text="X:" 
-                                 FontSize="16"/>
-                        <TextBlock Text="{Binding PrinterHead.XPosition, StringFormat={}{0:F1}}" 
-                                 FontSize="16"/>
-                        <TextBlock Text="Y:" 
-                                 FontSize="16" 
-                                 Margin="10,0,0,0"/>
-                        <TextBlock Text="{Binding PrinterHead.YPosition, StringFormat={}{0:F1}}" 
-                                 FontSize="16"/>
-                    </StackPanel>
-                </StackPanel>
+                    Classes="panel">
+                <Grid RowDefinitions="Auto,*">
+                    <TextBlock Grid.Row="0" 
+                             Text="Position" 
+                             Classes="title"/>
+                    
+                    <Grid Grid.Row="1" RowDefinitions="Auto,*">
+                        <StackPanel Grid.Row="0" 
+                                  Orientation="Horizontal" 
+                                  Spacing="20">
+                            <StackPanel>
+                                <TextBlock Text="X Position" 
+                                         Foreground="#888888"/>
+                                <TextBlock Text="{Binding PrinterHead.XPosition, StringFormat={}{0:F1}}"
+                                         Classes="value"
+                                         Foreground="#4488ff"/>
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Text="Y Position" 
+                                         Foreground="#888888"/>
+                                <TextBlock Text="{Binding PrinterHead.YPosition, StringFormat={}{0:F1}}"
+                                         Classes="value"
+                                         Foreground="#4488ff"/>
+                            </StackPanel>
+                        </StackPanel>
+                        
+                        <Border Grid.Row="1" 
+                                Background="#222222" 
+                                CornerRadius="5" 
+                                Margin="0 10 0 0">
+                            <ScottPlot:AvaPlot Name="PositionPlot"/>
+                        </Border>
+                    </Grid>
+                </Grid>
             </Border>
 
             <!-- Ink Level Panel -->
             <Border Grid.Row="1" 
                     Grid.Column="0" 
-                    Background="#1e1e1e" 
-                    Margin="5" 
-                    CornerRadius="5" 
-                    Padding="15">
-                <StackPanel>
-                    <TextBlock Text="Ink Level" 
-                             FontSize="18" 
-                             FontWeight="Bold"/>
-                    <ProgressBar Value="{Binding PrinterHead.InkLevel}" 
-                               Maximum="100" 
-                               Height="20" 
-                               Margin="0,10,0,0"/>
-                    <TextBlock Text="{Binding PrinterHead.InkLevel, StringFormat={}{0:F1}%}" 
-                             FontSize="16" 
-                             HorizontalAlignment="Center" 
-                             Margin="0,5,0,0"/>
-                </StackPanel>
+                    Classes="panel">
+                <Grid RowDefinitions="Auto,*">
+                    <TextBlock Grid.Row="0" 
+                             Text="Ink Level" 
+                             Classes="title"/>
+                    
+                    <Grid Grid.Row="1" RowDefinitions="Auto,*">
+                        <StackPanel Grid.Row="0">
+                            <TextBlock Text="{Binding PrinterHead.InkLevel, StringFormat={}{0:F1}%}"
+                                     Classes="value"
+                                     Foreground="{Binding HasInkWarning, 
+                                         Converter={x:Static BoolConverters.True}, 
+                                         ConverterParameter=#ff4444, 
+                                         FallbackValue=#4488ff}"/>
+                            <ProgressBar Value="{Binding PrinterHead.InkLevel}"
+                                       Maximum="100"
+                                       Foreground="{Binding HasInkWarning, 
+                                           Converter={x:Static BoolConverters.True}, 
+                                           ConverterParameter=#ff4444, 
+                                           FallbackValue=#4488ff}"/>
+                        </StackPanel>
+                        
+                        <Border Grid.Row="1" 
+                                Background="#222222" 
+                                CornerRadius="5" 
+                                Margin="0 10 0 0">
+                            <ScottPlot:AvaPlot Name="InkPlot"/>
+                        </Border>
+                    </Grid>
+                </Grid>
             </Border>
 
             <!-- Status Panel -->
             <Border Grid.Row="1" 
                     Grid.Column="1" 
-                    Background="#1e1e1e" 
-                    Margin="5" 
-                    CornerRadius="5" 
-                    Padding="15">
-                <StackPanel>
-                    <TextBlock Text="Status" 
-                             FontSize="18" 
-                             FontWeight="Bold"/>
-                    <TextBlock Text="{Binding PrinterHead.Status}" 
-                             FontSize="24" 
-                             Foreground="#00ff00"/>
-                </StackPanel>
+                    Classes="panel">
+                <Grid RowDefinitions="Auto,*">
+                    <TextBlock Grid.Row="0" 
+                             Text="Status" 
+                             Classes="title"/>
+                    
+                    <Grid Grid.Row="1">
+                        <Border Background="#222222" 
+                                CornerRadius="5" 
+                                Padding="20">
+                            <StackPanel>
+                                <TextBlock Text="{Binding PrinterHead.Status}"
+                                         Classes="value"
+                                         Foreground="{Binding PrinterHead.Status, 
+                                             Converter={x:Static StringConverters.IsNotNullOrEmpty}, 
+                                             ConverterParameter=#44ff44}"
+                                         TextWrapping="Wrap"/>
+                                <TextBlock Text="Last Updated: Just Now"
+                                         Foreground="#888888"
+                                         Margin="0 10 0 0"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </Grid>
             </Border>
         </Grid>
     </Grid>
