@@ -4,6 +4,7 @@
         xmlns:ScottPlot="clr-namespace:ScottPlot.Avalonia;assembly=ScottPlot.Avalonia"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:converters="using:Avalonia.Data.Converters"
         mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="800"
         x:Class="PrinterMonitorDemo.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
@@ -71,16 +72,14 @@
                             <TextBlock Text="{Binding PrinterHead.Temperature, StringFormat={}{0:F1}°C}"
                                      Classes="value"
                                      Foreground="{Binding HasTemperatureWarning, 
-                                         Converter={x:Static BoolConverters.True}, 
-                                         ConverterParameter=#ff4444, 
-                                         FallbackValue=#44ff44}"/>
+                                         Converter={x:Static converters:BooleanToVectorBrushConverter.Instance},
+                                         ConverterParameter='#44ff44,#ff4444'}"/>
                             <ProgressBar Value="{Binding PrinterHead.Temperature}"
                                        Minimum="50"
                                        Maximum="80"
-                                       Foreground="{Binding HasTemperatureWarning, 
-                                           Converter={x:Static BoolConverters.True}, 
-                                           ConverterParameter=#ff4444, 
-                                           FallbackValue=#44ff44}"/>
+                                       Foreground="{Binding HasTemperatureWarning,
+                                           Converter={x:Static converters:BooleanToVectorBrushConverter.Instance},
+                                           ConverterParameter='#44ff44,#ff4444'}"/>
                         </StackPanel>
                         
                         <Border Grid.Row="1" 
@@ -145,16 +144,14 @@
                         <StackPanel Grid.Row="0">
                             <TextBlock Text="{Binding PrinterHead.InkLevel, StringFormat={}{0:F1}%}"
                                      Classes="value"
-                                     Foreground="{Binding HasInkWarning, 
-                                         Converter={x:Static BoolConverters.True}, 
-                                         ConverterParameter=#ff4444, 
-                                         FallbackValue=#4488ff}"/>
+                                     Foreground="{Binding HasInkWarning,
+                                         Converter={x:Static converters:BooleanToVectorBrushConverter.Instance},
+                                         ConverterParameter='#4488ff,#ff4444'}"/>
                             <ProgressBar Value="{Binding PrinterHead.InkLevel}"
                                        Maximum="100"
-                                       Foreground="{Binding HasInkWarning, 
-                                           Converter={x:Static BoolConverters.True}, 
-                                           ConverterParameter=#ff4444, 
-                                           FallbackValue=#4488ff}"/>
+                                       Foreground="{Binding HasInkWarning,
+                                           Converter={x:Static converters:BooleanToVectorBrushConverter.Instance},
+                                           ConverterParameter='#4488ff,#ff4444'}"/>
                         </StackPanel>
                         
                         <Border Grid.Row="1" 
@@ -184,8 +181,9 @@
                                 <TextBlock Text="{Binding PrinterHead.Status}"
                                          Classes="value"
                                          Foreground="{Binding PrinterHead.Status, 
-                                             Converter={x:Static StringConverters.IsNotNullOrEmpty}, 
-                                             ConverterParameter=#44ff44}"
+                                             Converter={x:Static converters:StringEqualsConverter.Instance},
+                                             ConverterParameter='Operating Normally',
+                                             FallbackValue=#ff4444}"
                                          TextWrapping="Wrap"/>
                                 <TextBlock Text="Last Updated: Just Now"
                                          Foreground="#888888"
