@@ -55,37 +55,37 @@ Visualizations for movement patterns
 
 
 Roadmap for Improvement:
-1. Testing & Quality Assurance (First Priority)
+1. Testing & Quality Assurance (First Priority) - DONE
 * Unit tests for the ViewModel logic
-   * Test temperature warning thresholds
-   * Test ink level warnings
-   * Test status determination
-* Integration tests for UI updates
-* Test edge cases (e.g., max/min values)
-* Add input validation and error handling
-1. User Experience Improvements (Short Term)
-* Add visual feedback for value changes (smooth transitions)
-* Improve status updates with timestamps
-* Add tooltips for more information
-* Implement keyboard shortcuts
-* Add sound alerts for critical warnings
-1. Features & Functionality (Medium Term)
-* Add data persistence
-   * Log historical data
-   * Save settings
-   * Export functionality
-* Add configuration options
-   * Adjustable warning thresholds
-   * Customizable update intervals
-   * Color scheme preferences
-* Add simple controls
-   * Pause/resume monitoring
-   * Reset values
-   * Manual value adjustment (for testing)
-1. Visualization (Long Term)
-* Add trend graphs using LiveCharts2
-   * Temperature over time
-   * Ink usage rate
-   * Position tracking
-* Add heat maps for position data
-* Add statistical analysis
+    * Test temperature warning thresholds
+    * Test ink level warnings
+    * Test status determination
+    * Integration tests for UI updates
+    * Test edge cases (e.g., max/min values)
+    * Add input validation and error handling
+2. User Experience Improvements (Short Term)
+    * Add visual feedback for value changes (smooth transitions)
+    * Improve status updates with timestamps
+    * Add tooltips for more information
+    * Implement keyboard shortcuts
+    * Add sound alerts for critical warnings
+3. Features & Functionality (Medium Term)
+    * Add data persistence
+    * Log historical data
+    * Save settings
+    * Export functionality
+    * Add configuration options
+    * Adjustable warning thresholds
+    * Customizable update intervals
+    * Color scheme preferences
+    * Add simple controls
+    * Pause/resume monitoring
+    * Reset values
+    * Manual value adjustment (for testing)
+4. Visualization (Long Term)
+    * Add trend graphs using LiveCharts2
+    * Temperature over time
+    * Ink usage rate
+    * Position tracking
+    * Add heat maps for position data
+    * Add statistical analysis
